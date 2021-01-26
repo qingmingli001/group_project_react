@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import './App.css';
 import Tasks from "./component/tasks";
 import Users from './component/users';
+import SortTasks from './component/sortTasks';
+
+
 
 class App extends Component {
 
   state={
-    tasks:[],
+    tasks:[
+      {taskName: "wash the dog", completed: "false", user: undefined, id: 1},
+      {taskName: "fix the car", completed: "false", user: undefined, id: 2},
+      {taskName: "prepare the final", completed: "false", user: undefined, id: 3}
+    ],
     taskInput:"",
     id:1,
     users:[]
@@ -19,11 +26,9 @@ class App extends Component {
 
   addTask=(e)=>{
     document.getElementsByClassName("taskInput")[0].value="";
-
-
     this.setState((prevState)=>{
       return {
-        tasks: [...prevState.tasks,{task:prevState.taskInput,completed:"false",user:undefined,id:prevState.id}],
+        tasks: [...prevState.tasks,{taskName:prevState.taskInput,completed:"false",user:undefined,id:prevState.id}],
         id: ++prevState.id
       }})
     e.preventDefault();
@@ -38,6 +43,10 @@ class App extends Component {
           <input className="taskInput" type="text" placeholder="new tasks" onChange={this.updataInput}/>
           <button type="submit" onClick={this.addTask}>Add</button>
         </div>
+        <SortTasks 
+          showAll={this.showAll}
+          sortCompleted={this.sortCompleted}
+        />
         <Tasks />
         <Users />
       </div>
